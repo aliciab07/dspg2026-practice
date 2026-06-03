@@ -1,0 +1,88 @@
+---
+title: "My first Quarto Document"
+format: html 
+html: 
+---
+
+## Quarto
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+This is another paragraph. This is **bold** this is *italics* also **bold** also *italics*
+
+- This is the first item of an unordered list
+- Another item.
+
+Then some more text
+
+1. An ordered list
+2. A second item.
+
+[this is a linked text](https://quarto.org)
+
+## Running Code
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+## Third level heading
+
+```{r}
+# this is a comment 
+1 + 1 * 46 
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
+
+
+## Demonstration 
+
+```{r}
+library(tidyverse)
+library(here)
+
+# Read data with here
+interviews_plotting <- read_csv(
+  here("data/interviews-plotting.csv")
+  )
+
+# ./ means this directory
+# ../ scripts up to data directory, then to data, then to directories
+# read_csv("../data/interviews-plotting-csv")
+
+interviews_plotting
+```
+
+```{r}
+
+interviews_plotting |>
+  filter(respondent_wall_type != "cement") |>
+  ggplot(aes(x = respondent_wall_type, y = rooms)) +
+  geom_boxplot(outliers = FALSE) +
+  geom_jitter(
+    aes(color = village),
+    width = 0.3,
+    height = 1
+  ) +
+  geom_boxplot(outliers = FALSE, alpha = 0)
+
+interviews_plotting |>
+  ggplot(aes(y = fct_infreq(respondent_wall_type))) +
+  geom_bar(aes(fill = village)) +
+  labs(
+    y = "Wall type",
+    x = NULL,
+    fill = "Village"
+  ) +
+  theme_classic()
+
+ggsave("fig/wall.png")
+  
+```
+
