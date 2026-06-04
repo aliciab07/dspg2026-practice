@@ -5,10 +5,6 @@
 .positai
 .httr-oauth
 .DS_Store
-<<<<<<< HEAD
 .quarto
 fig/
 data/
-=======
-.quarto
->>>>>>> ee6a087 (fixing everything plsplspls)
